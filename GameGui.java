@@ -18,6 +18,7 @@ public class GameGui implements ActionListener {
     private JLabel label;
     private Random rand = new Random();
     private int randint = rand.nextInt(100);
+    private int count = 0;
 
     public GameGui() {
         frame = new JFrame();
@@ -48,14 +49,23 @@ public class GameGui implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String guess1 = text.getText();
-        Integer guess = Integer.parseInt(guess1);
-        if (guess == randint) {
-            label.setText("correct");
-            randint = rand.nextInt(100);
-        } else if (guess > randint) {
-            label.setText("lower");
-        } else if (guess < randint) {
-            label.setText("higher");
+        try {
+            Integer guess = Integer.parseInt(guess1);
+            if (guess == randint) {
+                label.setText("correct to leave type exit");
+                randint = rand.nextInt(100);
+            } else if (guess > randint) {
+                label.setText("lower");
+            } else if (guess < randint) {
+                label.setText("higher");
+            }
+            count = 0;
+        } catch (Exception t) {
+            label.setText("if you want to leave enter an invalid answer again ");
+            count = count + 1;
+            if (count == 2) {
+                System.exit(0);
+            }
         }
     }
 
